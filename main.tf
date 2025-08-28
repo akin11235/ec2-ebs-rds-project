@@ -33,17 +33,18 @@ terraform {
 # Terraform uses environment variables (AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY) instead.
 
 provider "aws" {
-  region  = "us-east-1"
-  profile = var.aws_profile != "" ? var.aws_profile : null
-}
-
-provider "aws" {
-  region = "us-east-1" # <-- use the same region where your EC2 lives
-  # profile = "user1-create-EC2"
-  # profile = var.aws_profile
+  region  = var.aws_region
   profile = var.aws_profile != "" ? var.aws_profile : null
   alias   = "user1"
 }
+
+# provider "aws" {
+# region = "us-east-1" # <-- use the same region where your EC2 lives
+# profile = "user1-create-EC2"
+# profile = var.aws_profile
+# profile = var.aws_profile != "" ? var.aws_profile : null
+# alias   = "user1"
+# }
 
 # =============================================================================
 # DATA SOURCES
@@ -64,7 +65,8 @@ data "aws_availability_zones" "available" {
 
 # Virtual Private Cloud - Creates isolated network environment
 resource "aws_vpc" "main_vpc" {
-  cidr_block = "10.0.0.0/16"
+  # cidr_block = "10.0.0.0/16"
+  cidr_block = var.vpc_cidr
 
   # Enable DNS resolution and hostnames for internal communication
   enable_dns_hostnames = true # Allows instances to get public DNS names
@@ -79,7 +81,7 @@ resource "aws_vpc" "main_vpc" {
 
 # Internet Gateway - Provides internet access to public subnets
 resource "aws_internet_gateway" "main_igw" {
-  vpc_id = aws_vpc.main_vpc.id # Attach to our VPC
+  vpc_id = aws_vpc.main_vpc.id # Attach to the VPC
 
   tags = {
     Name = "MainProject-IGW"
@@ -90,7 +92,7 @@ resource "aws_internet_gateway" "main_igw" {
 # Public Subnet - Resources here can have direct internet access
 resource "aws_subnet" "public_sn1_tfproject" {
   vpc_id                  = aws_vpc.main_vpc.id
-  cidr_block              = "10.0.1.0/24"
+  cidr_block              = var.public_subnet_cidr
   availability_zone       = data.aws_availability_zones.available.names[0] # Use first available AZ
   map_public_ip_on_launch = true                                           # Automatically assign public IPs to instances
 
@@ -105,7 +107,7 @@ resource "aws_subnet" "public_sn1_tfproject" {
 # Private Subnet - No direct internet access, first AZ
 resource "aws_subnet" "private_sn1_tfproject" {
   vpc_id            = aws_vpc.main_vpc.id
-  cidr_block        = "10.0.2.0/24"
+  cidr_block        = var.private_subnet_a_cidr
   availability_zone = data.aws_availability_zones.available.names[0] # Same AZ as public
 
   tags = {
@@ -118,7 +120,7 @@ resource "aws_subnet" "private_sn1_tfproject" {
 # Private Subnet - Second AZ
 resource "aws_subnet" "private_sn2_tfproject" {
   vpc_id            = aws_vpc.main_vpc.id
-  cidr_block        = "10.0.3.0/24"
+  cidr_block        = var.private_subnet_b_cidr
   availability_zone = data.aws_availability_zones.available.names[1] # Second AZ
 
   tags = {
@@ -140,7 +142,7 @@ resource "aws_route_table" "public-route-table-1" {
 
   # Default route: send all traffic (0.0.0.0/0) to Internet Gateway
   route {
-    cidr_block = "0.0.0.0/0" # All destinations
+    cidr_block = var.open_cidr # All destinations
     gateway_id = aws_internet_gateway.main_igw.id
   }
   # This enables bidirectional internet connectivity for public subnet
@@ -298,7 +300,7 @@ output "key_pair_name" {
 
 resource "local_file" "private_key_file" {
   content         = tls_private_key.ec2_tf_training_key.private_key_pem
-  filename = "/home/akin11235/.ssh/tf_keys/ec2_tf_training_key.pem"
+  filename        = "/home/akin11235/.ssh/tf_keys/ec2_tf_training_key.pem"
   file_permission = "0400"
 }
 
