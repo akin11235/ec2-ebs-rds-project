@@ -1,4 +1,5 @@
-# This is a new main.tf for create an ec2 instance. attach additional ebs volume of type gp3 with 20gb of storage. install any pre-spftware and take a backup. the ec2 instace should have access to rds.
+# This is a new main.tf for create an ec2 instance. attach additional ebs volume of type gp3 with 20gb of storage. 
+# install any pre-spftware and take a backup. the ec2 instace should have access to rds.
 
 # =============================================================================
 # TERRAFORM CONFIGURATION AND PROVIDER SETUP
@@ -297,8 +298,8 @@ output "key_pair_name" {
 
 resource "local_file" "private_key_file" {
   content         = tls_private_key.ec2_tf_training_key.private_key_pem
-  filename        = "~/.ssh/tf_keys/ec2_tf_training_key.pem"
-  file_permission = "0600"
+  filename = "/home/akin11235/.ssh/tf_keys/ec2_tf_training_key.pem"
+  file_permission = "0400"
 }
 
 
@@ -355,7 +356,7 @@ resource "aws_volume_attachment" "extra_volume_attach" {
 # Create Backup AMI after Instance Launch
 # ----------------------------
 resource "aws_ami_from_instance" "training_server_backup" {
-  name                    = "training-server-backup-${timestamp()}"
+  name                    = "training-server-backup-${formatdate("YYYY-MM-DD-hhmm", timestamp())}"
   source_instance_id      = aws_instance.training_server.id
   snapshot_without_reboot = true # Avoids rebooting the instance
   tags = {
