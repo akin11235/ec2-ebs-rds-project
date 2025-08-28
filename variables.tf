@@ -17,6 +17,128 @@ variable "open_cidr" {
 }
 
 
+
+# =============================================================================
+# SECURITY GROUPS
+# Virtual firewalls that control traffic to/from resources
+# =============================================================================
+
+# # Egress rules
+# =============================================================================
+variable "egress_protocol" {
+  description = "All protocols"
+  type        = string
+  # default     = "-1"
+}
+
+variable "egress_cidr_blocks" {
+  description = "CIDR block representing open access (0.0.0.0/0)"
+  type        = list(string)
+  # default     = ["0.0.0.0/0"]
+}
+
+variable "egress_to_port" {
+  description = "Egress rule ending port"
+  type        = number
+  # default     = 0
+
+}
+
+variable "egress_from_port" {
+  description = "Egress rule starting port"
+  type        = number
+  # default     = 0
+
+}
+
+
+# # Ingress rules
+# =============================================================================
+variable "ingress_protocol" {
+  description = "Protocol for ingress rule"
+  type        = string
+}
+
+# Allow from any IP address
+variable "ingress_cidr_blocks" {
+  description = "CIDR blocks allowed for ingress"
+  type        = list(string)
+}
+
+# variable "ingress_to_port" {
+# description = "Ingress rule ending port"
+#   type        = number
+#   default     = 8080
+# }
+
+# variable "ingress_from_port"{
+#   description = "Ingress rule starting port"
+#   type        = number
+#   default     = 8080
+
+# }
+
+
+
+# HTTP rules
+variable "http_to_port" {
+  description = "Port for HTTP traffic"
+  type        = number
+}
+
+variable "http_from_port" {
+  description = "Port for HTTP traffic"
+  type        = number
+}
+
+
+variable "https_to_port" {
+  description = "Port for HTTPS traffic"
+  type        = number
+}
+
+variable "https_from_port" {
+  description = "Port for HTTPS traffic"
+  type        = number
+}
+# ssh rules
+variable "ssh_to_port" {
+  description = "Port for SSH access"
+  type        = number
+}
+
+variable "ssh_from_port" {
+  description = "Port for SSH access"
+  type        = number
+}
+
+variable "ssh_allowed_cidrs" {
+  description = "CIDR blocks allowed for SSH access"
+  type        = list(string)
+  default     = ["0.0.0.0/0"] # In prod, restrict to specific IPs
+}
+
+variable "https_allowed_cidrs" {
+  description = "CIDR blocks allowed for HTTPS access"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
+# Variable for port 8080
+variable "app_port" {
+  description = "Port for application traffic (e.g., HTTP alternative)"
+  type        = number
+  default     = 8080
+}
+
+variable "app_allowed_cidrs" {
+  description = "CIDR blocks allowed for application traffic"
+  type        = list(string)
+  default     = ["0.0.0.0/0"] # Change in production
+}
+
+
+
 variable "vpc_cidr" {
   description = "CIDR block for the entire VPC - defines IP address range"
   type        = string
@@ -48,6 +170,30 @@ variable "private_subnet_b_cidr" {
   # Required by RDS for Multi-AZ deployment
   # Must be in different availability zone from private_subnet_a
 }
+
+# =============================================================================
+# COMPUTE RESOURCES
+# EC2 instances and related infrastructure
+# =============================================================================
+# ami_id          = "ami-0861f4e788f5069dd"   # Example AMI for us-east-1
+
+variable "instance_name" {
+  description = "Tag name for the instance"
+  type        = string
+  default     = "Ubuntu-Web-Server"
+
+}
+
+variable "instance_type" {
+  description = "EC2 instance type"
+  type        = string
+  default     = "t3.micro"
+}
+
+
+
+
+
 
 
 
