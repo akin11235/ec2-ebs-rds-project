@@ -15,7 +15,7 @@ terraform {
     }
     local = {
       source  = "hashicorp/local"
-      version = "~> 2.4" 
+      version = "~> 2.4"
     }
   }
 }
@@ -37,7 +37,7 @@ provider "aws" {
 }
 
 provider "aws" {
-  region  = "us-east-1" # <-- use the same region where your EC2 lives
+  region = "us-east-1" # <-- use the same region where your EC2 lives
   # profile = "user1-create-EC2"
   profile = var.aws_profile
   alias   = "user1"
@@ -295,8 +295,8 @@ output "key_pair_name" {
 }
 
 resource "local_file" "private_key_file" {
-  content  = tls_private_key.ec2_tf_training_key.private_key_pem
-  filename = "~/.ssh/tf_keys/ec2_tf_training_key.pem"
+  content         = tls_private_key.ec2_tf_training_key.private_key_pem
+  filename        = "~/.ssh/tf_keys/ec2_tf_training_key.pem"
   file_permission = "0600"
 }
 
