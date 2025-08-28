@@ -39,7 +39,8 @@ provider "aws" {
 provider "aws" {
   region = "us-east-1" # <-- use the same region where your EC2 lives
   # profile = "user1-create-EC2"
-  profile = var.aws_profile
+  # profile = var.aws_profile
+  profile = var.aws_profile != "" ? var.aws_profile : null
   alias   = "user1"
 }
 
