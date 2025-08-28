@@ -1,0 +1,111 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36" version="28.1.1">
+  <diagram name="Page-1" id="dJjIC1foFlQX4FA_tedR">
+    <mxGraphModel dx="749" dy="418" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="145" y="90" width="530" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-2" value="vpc- &quot;main_vpc&quot; - 10.0.0.0/16" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="220" y="60" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-3" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="120" width="180" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-4" value="Public Subnet: sn1-tfproject - 10.0.1.0/24" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="145" y="90" width="250" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-5" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="180" y="280" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-6" value="Private Subnet: sn2-tfproject - 10.0.2.0/24&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;- requires subnet group&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="140" y="380" width="250" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-7" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="130" width="50" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-8" value="ec2" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="200" y="135" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-9" value="security group -sg1-xxxxx" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="240" y="145" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-10" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="290" width="50" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-11" value="security group -sg2-xxxxx" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="240" y="305" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-12" value="rds" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="200" y="305" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-13" value="&lt;span style=&quot;font-size:11.0pt;line-height:107%;&amp;lt;br/&amp;gt;font-family:&amp;quot;Calibri&amp;quot;,sans-serif;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:&amp;lt;br/&amp;gt;Calibri;mso-fareast-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;&amp;lt;br/&amp;gt;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-theme-font:minor-bidi;&amp;lt;br/&amp;gt;mso-ansi-language:EN-CA;mso-fareast-language:EN-US;mso-bidi-language:AR-SA&quot;&gt;- create&amp;nbsp;an ec2 instance.&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size:11.0pt;line-height:107%;&amp;lt;br/&amp;gt;font-family:&amp;quot;Calibri&amp;quot;,sans-serif;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:&amp;lt;br/&amp;gt;Calibri;mso-fareast-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;&amp;lt;br/&amp;gt;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-theme-font:minor-bidi;&amp;lt;br/&amp;gt;mso-ansi-language:EN-CA;mso-fareast-language:EN-US;mso-bidi-language:AR-SA&quot;&gt;- attach additional ebs volume of type gp3 with 20gb of storage.&lt;br&gt;- install any pre-software and take a backup.&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size:11.0pt;line-height:107%;&amp;lt;br/&amp;gt;font-family:&amp;quot;Calibri&amp;quot;,sans-serif;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:&amp;lt;br/&amp;gt;Calibri;mso-fareast-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;&amp;lt;br/&amp;gt;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-theme-font:minor-bidi;&amp;lt;br/&amp;gt;mso-ansi-language:EN-CA;mso-fareast-language:EN-US;mso-bidi-language:AR-SA&quot;&gt;- the ec2 instace should have access to rds.&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="480" width="425" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-14" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="175" width="50" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-15" value="ebs" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="220" y="180" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-17" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="650" y="210" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-18" value="IGW" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="652.5" y="220" width="45" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-19" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="165" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-20" value="Route Table: rt1-public" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="440" y="180" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-22" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="dRPCtmGYzN9XHIakmZMW-3" target="dRPCtmGYzN9XHIakmZMW-5">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="380" y="340" as="sourcePoint" />
+            <mxPoint x="430" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-23" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" target="dRPCtmGYzN9XHIakmZMW-19">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="358.75" y="175" as="sourcePoint" />
+            <mxPoint x="358.75" y="225" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-24" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="dRPCtmGYzN9XHIakmZMW-19" target="dRPCtmGYzN9XHIakmZMW-18">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="550" y="200" as="sourcePoint" />
+            <mxPoint x="621.25" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-25" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="295" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-26" value="Route Table : rt2-private" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="420" y="310" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-27" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="dRPCtmGYzN9XHIakmZMW-5" target="dRPCtmGYzN9XHIakmZMW-25">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="380" y="340" as="sourcePoint" />
+            <mxPoint x="430" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-29" value="IGW - &quot;main_igw&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="652.5" y="190" width="160" height="30" as="geometry" />
+        </mxCell>
+        <UserObject label="ssh -i ./ec2_tf_training_key.pem ec2-user@3.81.80.135" link="ssh -i ./ec2_tf_training_key.pem ec2-user@3.81.80.135" id="dRPCtmGYzN9XHIakmZMW-30">
+          <mxCell style="text;whiteSpace=wrap;" vertex="1" parent="1">
+            <mxGeometry x="140" y="590" width="330" height="40" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-32" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="190" width="50" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="dRPCtmGYzN9XHIakmZMW-33" value="pre-software" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="270" y="195" width="30" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

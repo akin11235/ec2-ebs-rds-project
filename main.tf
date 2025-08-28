@@ -198,36 +198,36 @@ resource "aws_security_group" "ec2_web" {
   # INBOUND RULES (Ingress)
   # Allow HTTP traffic from anywhere on the internet
   ingress {
-    from_port   = 80 # HTTP port
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # Allow from any IP address
+    from_port   = var.http_from_port
+    to_port     = var.http_to_port
+    protocol    = var.ingress_protocol
+    cidr_blocks = var.ingress_cidr_blocks
   }
 
   # Allow HTTPS traffic from anywhere on the internet
   ingress {
-    from_port   = 443 # HTTPS port
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = var.https_from_port
+    to_port     = var.https_to_port
+    protocol    = var.ingress_protocol
+    cidr_blocks = var.ingress_cidr_blocks
   }
 
   # Allow SSH access for server administration
   ingress {
-    from_port   = 22 # SSH port
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # In production, restrict to specific IPs
+    from_port   = var.ssh_from_port
+    to_port     = var.ssh_to_port
+    protocol    = var.ingress_protocol
+    cidr_blocks = var.ingress_cidr_blocks
   }
 
 
   # OUTBOUND RULES (Egress)
   # Allow all outbound traffic (needed for package downloads, API calls, etc.)
   egress {
-    from_port   = 0 # All ports
-    to_port     = 0
-    protocol    = "-1"          # All protocols
-    cidr_blocks = ["0.0.0.0/0"] # To any destination
+    from_port   = var.egress_from_port # All ports
+    to_port     = var.egress_to_port
+    protocol    = var.egress_protocol    # All protocols
+    cidr_blocks = var.egress_cidr_blocks # To any destination
   }
 
   tags = {
@@ -293,23 +293,29 @@ resource "aws_key_pair" "ec2_tf_training_key_pair" {
 #   sensitive = true
 # }
 
+# Save private key to file (works in both GitHub Actions and locally)
+resource "local_file" "private_key_file" {
+  content = tls_private_key.ec2_tf_training_key.private_key_pem
+  # filename        = "/home/akin11235/.ssh/tf_keys/ec2_tf_training_key.pem"
+  filename        = "${path.module}/ec2_tf_training_key.pem" # This works in both environments
+  file_permission = "0400"
+}
+
 # Output the key name for reference
 output "key_pair_name" {
   value = aws_key_pair.ec2_tf_training_key_pair.key_name
 }
 
-resource "local_file" "private_key_file" {
-  content         = tls_private_key.ec2_tf_training_key.private_key_pem
-  filename        = "/home/akin11235/.ssh/tf_keys/ec2_tf_training_key.pem"
-  file_permission = "0400"
+# Output the EC2 instance public IP for SSH connection
+output "instance_public_ip" {
+  value = aws_instance.training_server.public_ip
 }
-
 
 # EC2 using the key pair
 resource "aws_instance" "training_server" {
   provider      = aws.user1
   ami           = "ami-00ca32bbc84273381"
-  instance_type = "t3.micro"
+  instance_type = var.instance_type
   key_name      = aws_key_pair.ec2_tf_training_key_pair.key_name
 
   # User Data: Install software & prepare EBS
@@ -328,7 +334,7 @@ resource "aws_instance" "training_server" {
               EOF
 
   tags = {
-    Name        = "Training-Server"
+    Name        = var.instance_name
     Environment = "Prod"
     Owner       = "Operations"
     Project     = "DevOps Launchpad"
