@@ -13,18 +13,33 @@ terraform {
       source  = "hashicorp/tls"
       version = "~> 4.0"
     }
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.4" 
+    }
   }
 }
 
 # Default provider
+# provider "aws" {
+#   region  = "us-east-1"
+#   profile = "user1-create-EC2"
+# }
+
+# If var.aws_profile is set (non-empty), Terraform uses that profile.
+# 
+# If var.aws_profile is empty (like in GitHub Actions with AWS_PROFILE=""), 
+# Terraform uses environment variables (AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY) instead.
+
 provider "aws" {
   region  = "us-east-1"
-  profile = "user1-create-EC2"
+  profile = var.aws_profile != "" ? var.aws_profile : null
 }
 
 provider "aws" {
   region  = "us-east-1" # <-- use the same region where your EC2 lives
-  profile = "user1-create-EC2"
+  # profile = "user1-create-EC2"
+  profile = var.aws_profile
   alias   = "user1"
 }
 
@@ -269,14 +284,20 @@ resource "aws_key_pair" "ec2_tf_training_key_pair" {
 }
 
 # Output the key for use in SSH
-output "private_key_pem" {
-  value     = tls_private_key.ec2_tf_training_key.private_key_pem
-  sensitive = true
-}
+# output "private_key_pem" {
+#   value     = tls_private_key.ec2_tf_training_key.private_key_pem
+#   sensitive = true
+# }
 
 # Output the key name for reference
 output "key_pair_name" {
   value = aws_key_pair.ec2_tf_training_key_pair.key_name
+}
+
+resource "local_file" "private_key_file" {
+  content  = tls_private_key.ec2_tf_training_key.private_key_pem
+  filename = "~/.ssh/tf_keys/ec2_tf_training_key.pem"
+  file_permission = "0600"
 }
 
 
