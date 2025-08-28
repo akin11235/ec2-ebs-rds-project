@@ -84,14 +84,14 @@ jobs:
       run: terraform fmt -check
 
       # 4a. Auto-format Terraform files (optional)
-    - name: Terraform Auto-Format
-      run: |
-        terraform fmt
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
-        git add .
-        git commit -m "chore: auto-format Terraform files" || echo "No changes to commit"
-        git push
+    # - name: Terraform Auto-Format
+    #   run: |
+    #     terraform fmt
+    #     git config --global user.name "github-actions"
+    #     git config --global user.email "github-actions@github.com"
+    #     git add .
+    #     git commit -m "chore: auto-format Terraform files" || echo "No changes to commit"
+    #     git push
 
     # 5. Terraform Validate
     - name: Terraform Validate
