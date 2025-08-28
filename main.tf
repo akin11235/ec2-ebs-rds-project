@@ -23,7 +23,7 @@ provider "aws" {
 }
 
 provider "aws" {
-  region = "us-east-1"   # <-- use the same region where your EC2 lives
+  region  = "us-east-1" # <-- use the same region where your EC2 lives
   profile = "user1-create-EC2"
   alias   = "user1"
 }
@@ -47,7 +47,7 @@ data "aws_availability_zones" "available" {
 
 # Virtual Private Cloud - Creates isolated network environment
 resource "aws_vpc" "main_vpc" {
-  cidr_block           = "10.0.0.0/16"
+  cidr_block = "10.0.0.0/16"
 
   # Enable DNS resolution and hostnames for internal communication
   enable_dns_hostnames = true # Allows instances to get public DNS names
@@ -67,7 +67,7 @@ resource "aws_internet_gateway" "main_igw" {
   tags = {
     Name = "MainProject-IGW"
   }
-   # IGW is managed by AWS, horizontally scaled, redundant, and highly available
+  # IGW is managed by AWS, horizontally scaled, redundant, and highly available
 }
 
 # Public Subnet - Resources here can have direct internet access
@@ -75,7 +75,7 @@ resource "aws_subnet" "public_sn1_tfproject" {
   vpc_id                  = aws_vpc.main_vpc.id
   cidr_block              = "10.0.1.0/24"
   availability_zone       = data.aws_availability_zones.available.names[0] # Use first available AZ
-  map_public_ip_on_launch = true # Automatically assign public IPs to instances
+  map_public_ip_on_launch = true                                           # Automatically assign public IPs to instances
 
   tags = {
     Name = "public_sn1_tfproject"
@@ -89,20 +89,20 @@ resource "aws_subnet" "public_sn1_tfproject" {
 resource "aws_subnet" "private_sn1_tfproject" {
   vpc_id            = aws_vpc.main_vpc.id
   cidr_block        = "10.0.2.0/24"
-  availability_zone = data.aws_availability_zones.available.names[0]  # Same AZ as public
+  availability_zone = data.aws_availability_zones.available.names[0] # Same AZ as public
 
   tags = {
     Name = "private_sn1_tfproject"
     Type = "Private"
   }
-   # This subnet will host the RDS database subnet group
+  # This subnet will host the RDS database subnet group
 }
 
 # Private Subnet - Second AZ
 resource "aws_subnet" "private_sn2_tfproject" {
   vpc_id            = aws_vpc.main_vpc.id
   cidr_block        = "10.0.3.0/24"
-  availability_zone = data.aws_availability_zones.available.names[1]  # Second AZ
+  availability_zone = data.aws_availability_zones.available.names[1] # Second AZ
 
   tags = {
     Name = "private_sn2_tfproject"
@@ -121,12 +121,12 @@ resource "aws_subnet" "private_sn2_tfproject" {
 resource "aws_route_table" "public-route-table-1" {
   vpc_id = aws_vpc.main_vpc.id
 
-# Default route: send all traffic (0.0.0.0/0) to Internet Gateway
+  # Default route: send all traffic (0.0.0.0/0) to Internet Gateway
   route {
     cidr_block = "0.0.0.0/0" # All destinations
     gateway_id = aws_internet_gateway.main_igw.id
   }
- # This enables bidirectional internet connectivity for public subnet
+  # This enables bidirectional internet connectivity for public subnet
 
   tags = {
     Name = "Public-Route-Table-1"
@@ -176,26 +176,26 @@ resource "aws_security_group" "ec2_web" {
   vpc_id      = aws_vpc.main_vpc.id
 
 
-# INBOUND RULES (Ingress)
+  # INBOUND RULES (Ingress)
   # Allow HTTP traffic from anywhere on the internet
   ingress {
-    from_port   = 80  # HTTP port
+    from_port   = 80 # HTTP port
     to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # Allow from any IP address
   }
 
-# Allow HTTPS traffic from anywhere on the internet
+  # Allow HTTPS traffic from anywhere on the internet
   ingress {
-    from_port   = 443  # HTTPS port
+    from_port   = 443 # HTTPS port
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
- # Allow SSH access for server administration
+  # Allow SSH access for server administration
   ingress {
-    from_port   = 22  # SSH port
+    from_port   = 22 # SSH port
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # In production, restrict to specific IPs
@@ -205,10 +205,10 @@ resource "aws_security_group" "ec2_web" {
   # OUTBOUND RULES (Egress)
   # Allow all outbound traffic (needed for package downloads, API calls, etc.)
   egress {
-    from_port   = 0   # All ports
+    from_port   = 0 # All ports
     to_port     = 0
-    protocol    = "-1"   # All protocols
-    cidr_blocks = ["0.0.0.0/0"]  # To any destination
+    protocol    = "-1"          # All protocols
+    cidr_blocks = ["0.0.0.0/0"] # To any destination
   }
 
   tags = {
@@ -222,10 +222,10 @@ resource "aws_security_group" "database" {
   name_prefix = "database-sg"
   vpc_id      = aws_vpc.main_vpc.id
 
-# INBOUND RULES (Ingress)
+  # INBOUND RULES (Ingress)
   # Only allow PostgreSQL traffic from web server security group
   ingress {
-    from_port       = 5432  # PostgreSQL default port
+    from_port       = 5432 # PostgreSQL default port
     to_port         = 5432
     protocol        = "tcp"
     security_groups = [aws_security_group.ec2_web.id] # Only from web server SG
@@ -233,7 +233,7 @@ resource "aws_security_group" "database" {
     # More secure than IP-based rules as it automatically adapts to instance changes
   }
 
-# OUTBOUND RULES (Egress)
+  # OUTBOUND RULES (Egress)
   # Allow outbound traffic for updates and patches
   egress {
     from_port   = 0
@@ -264,7 +264,7 @@ resource "tls_private_key" "ec2_tf_training_key" {
 # Create an AWS key pair using the generated public key
 resource "aws_key_pair" "ec2_tf_training_key_pair" {
   provider   = aws.user1
-  key_name   = "ec2-tf-training-key"  # AWS key name
+  key_name   = "ec2-tf-training-key" # AWS key name
   public_key = tls_private_key.ec2_tf_training_key.public_key_openssh
 }
 
@@ -333,9 +333,9 @@ resource "aws_volume_attachment" "extra_volume_attach" {
 # Create Backup AMI after Instance Launch
 # ----------------------------
 resource "aws_ami_from_instance" "training_server_backup" {
-  name               = "training-server-backup-${timestamp()}"
-  source_instance_id = aws_instance.training_server.id
-  snapshot_without_reboot = true   # Avoids rebooting the instance
+  name                    = "training-server-backup-${timestamp()}"
+  source_instance_id      = aws_instance.training_server.id
+  snapshot_without_reboot = true # Avoids rebooting the instance
   tags = {
     Name = "Training-Server-Backup"
   }
@@ -370,25 +370,25 @@ resource "aws_db_subnet_group" "private_sn1_tfproject" {
 # ----------------------------
 resource "aws_db_instance" "postgres" {
   # Basic configuration
-  identifier        = "webapp-postgres"    # Unique DB identifier
-  allocated_storage = 20                   # Storage in GB
-  storage_type      = "gp2"                # General Purpose SSD
-  engine            = "postgres"           # Database engine
-  engine_version    = "14.18"             # PostgreSQL version
-  instance_class    = "db.t3.micro"        # Small, free-tier eligible
+  identifier        = "webapp-postgres" # Unique DB identifier
+  allocated_storage = 20                # Storage in GB
+  storage_type      = "gp2"             # General Purpose SSD
+  engine            = "postgres"        # Database engine
+  engine_version    = "14.18"           # PostgreSQL version
+  instance_class    = "db.t3.micro"     # Small, free-tier eligible
 
   # Database credentials
-  db_name  = "webapp"                      # Initial DB name
-  username = "webadmin"                     # Master username
-  password = "ChangeMe123!"                # Master password (use Secrets Manager in production)
+  db_name  = "webapp"       # Initial DB name
+  username = "webadmin"     # Master username
+  password = "ChangeMe123!" # Master password (use Secrets Manager in production)
 
   # Networking
-  vpc_security_group_ids = [aws_security_group.database.id]  # Security group
-  db_subnet_group_name   = aws_db_subnet_group.private_sn1_tfproject.name     # Subnet group
+  vpc_security_group_ids = [aws_security_group.database.id]               # Security group
+  db_subnet_group_name   = aws_db_subnet_group.private_sn1_tfproject.name # Subnet group
 
   # Development safety settings
-  skip_final_snapshot = true               # Allows quick destroy in dev
-  deletion_protection = false              # Allows Terraform destroy
+  skip_final_snapshot = true  # Allows quick destroy in dev
+  deletion_protection = false # Allows Terraform destroy
 
   # Tags
   tags = {
