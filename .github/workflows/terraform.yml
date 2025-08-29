@@ -45,9 +45,10 @@
 name: 'Terraform'
 
 on:
-  push:
-    branches: [ "main" ]
+  # push:
+    # branches: [ "main" ]
   # pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -117,29 +118,3 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_DEFAULT_REGION: us-east-1
 
-   # Upload SSH Private Key as artifact for easy access
-    - name: Upload SSH Private Key
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      uses: actions/upload-artifact@v4
-      with:
-        name: ec2-ssh-key
-        path: ec2_tf_training_key.pem
-        retention-days: 7
-
-    # Display connection information
-    - name: Display SSH Connection Info
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: |
-        echo "Infrastructure deployed successfully!"
-        echo ""
-        echo "Connection Details:"
-        echo "EC2 Instance Public IP: $(terraform output -raw instance_public_ip)"
-        echo "Key Pair Name: $(terraform output -raw key_pair_name)"
-        echo ""
-        echo " SSH Connection:"
-        echo "1. Download the 'ec2-ssh-key' artifact from this workflow run"
-        echo "2. Extract the ec2_tf_training_key.pem file"
-        echo "3. Set correct permissions: chmod 400 ec2_tf_training_key.pem"
-        echo "4. Connect with: ssh -i ec2_tf_training_key.pem ec2-user@$(terraform output -raw instance_public_ip)"
-        echo ""
-        echo "The private key artifact will be available for 7 days"
